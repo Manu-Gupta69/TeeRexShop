@@ -1,0 +1,18 @@
+.searchbar__parent {
+  display: flex;
+  align-items: flex-end;
+  .search__text {
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    background: none;
+    margin-right: 20px;
+    width: 400px;
+  }
+  .icon__wrapper {
+    padding: 2px 10px;
+    background-color: bisque;
+    border-radius: 5px;
+  }
+}
