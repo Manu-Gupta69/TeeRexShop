@@ -1,0 +1,31 @@
+.productcard__parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  .product__img {
+    height: 200px;
+    width: 300px;
+  }
+  .card__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 5px;
+    width: 100%;
+
+    h4 {
+      font-size: 1.3rem;
+    }
+    button {
+      color: white;
+      font-size: 1rem;
+      background-color: rgb(41, 41, 41);
+      padding: 7px 15px;
+      border: none;
+    }
+  }
+}
