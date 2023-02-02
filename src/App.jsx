@@ -1,34 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.scss";
+import { NavBar, FilterSideBar, AllProducts } from "./components/molecules";
+import products from "./apis/products";
+import { evalutateExpression } from "../filterTest";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [productsData, setProductsData] = useState([]);
+  const [expression, setExpression] = useState({});
+  const [filteredData, setFilteredData] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const res = await products.get(
+        "coding-problems/shopping-cart/catalogue.json"
+      );
+      if (res?.data?.length) {
+        setProductsData((prev) => res.data);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    const expressionButInArray = Object.values(expression);
+    const filteredData = productsData.filter((item) =>
+      expressionButInArray.some((expression) => {
+        return evalutateExpression(expression, item);
+      })
+    );
+
+    setFilteredData((prev) => filteredData);
+  }, [expression]);
+
+  const handleCheckBox = (value, key, operation, ranges) => {
+    setExpression((prev) => {
+      const newExpression = { ...prev };
+      if (newExpression.hasOwnProperty(value)) {
+        delete newExpression[value];
+      } else {
+        if (operation == "between" && ranges?.length) {
+          newExpression[value] = { key, operation, value: ranges };
+        } else {
+          newExpression[value] = { key, operation, value };
+        }
+      }
+      return newExpression;
+    });
+  };
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="nav">
+        <NavBar />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="lower">
+        <div className="sidebar">
+          <div className="sidebar__wrapper">
+            <FilterSideBar onHandleCheckBox={handleCheckBox} />
+          </div>
+        </div>
+        <div className="products">
+          <AllProducts
+            productsData={filteredData.length ? filteredData : productsData}
+          />
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

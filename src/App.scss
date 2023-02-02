@@ -1,0 +1,31 @@
+.App {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  flex-direction: column;
+}
+.nav {
+  flex: 1;
+  padding: 0 40px 0 40px;
+}
+.lower {
+  height: 1000px;
+  display: flex;
+  flex: 8;
+
+  .sidebar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .sidebar__wrapper {
+      width: 50%;
+      padding: 30px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+        0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+  }
+  .products {
+    flex: 3;
+  }
+}
