@@ -11,8 +11,24 @@
     width: 400px;
   }
   .icon__wrapper {
+    margin-right: 20px;
+    column-gap: 20px;
     padding: 2px 10px;
-    background-color: bisque;
+    background-color: black;
     border-radius: 5px;
+  }
+  .filter {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 714px) {
+  .searchbar__parent {
+    .search__text {
+      width: 200px;
+    }
+    .filter {
+      display: inline-block;
+    }
   }
 }

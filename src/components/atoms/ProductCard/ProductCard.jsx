@@ -11,7 +11,29 @@ const ProductCard = (props) => {
       />
       <div className="card__bottom">
         <h4>Rs {props.itemData.price}</h4>
-        <button>Add to Cart</button>
+        {props.cart.hasOwnProperty(props.itemData.id) ? (
+          <div className="manage__quantity">
+            <button
+              onClick={(e) => {
+                props.onManageQuantityClick("decrement", props.itemData.id);
+              }}
+            >
+              -
+            </button>
+            <h3>{props.cart[props.itemData.id].itemQuantity}</h3>
+            <button
+              onClick={(e) => {
+                props.onManageQuantityClick("increment", props.itemData.id);
+              }}
+            >
+              +
+            </button>
+          </div>
+        ) : (
+          <button onClick={() => props.onAddToCartClick(props.itemData)}>
+            Add to Cart
+          </button>
+        )}
       </div>
     </div>
   );

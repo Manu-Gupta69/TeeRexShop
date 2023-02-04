@@ -1,0 +1,31 @@
+.cart__card__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 60px;
+  margin-bottom: 30px;
+
+  .card__title {
+    display: flex;
+    flex-direction: column;
+  }
+  .card__title span:nth-child(1) {
+    font-size: larger;
+    font-weight: bold;
+  }
+  .card__img {
+    height: 80px;
+    width: 80px;
+  }
+  .cart__qty {
+    padding: 5px 30px;
+    background-color: rgba(191, 190, 190, 0.727);
+  }
+
+  button {
+    padding: 10px 20px;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+}

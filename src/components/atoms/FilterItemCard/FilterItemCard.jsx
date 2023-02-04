@@ -14,7 +14,7 @@ const FilterItemCard = ({
       <div className="card__child__2">
         {values.map((item, index) => {
           return (
-            <div className="child__2_checkbox">
+            <div key={index} className="child__2_checkbox">
               <input
                 onClick={() => {
                   const range = ranges ? ranges[index] : null;

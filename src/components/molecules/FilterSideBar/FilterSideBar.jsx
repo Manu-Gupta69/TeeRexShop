@@ -8,6 +8,7 @@ const FilterSideBar = (props) => {
       {filterData.map((item, index) => {
         return (
           <FilterItemCard
+            key={index}
             onHandleCheckBox={props.onHandleCheckBox}
             title={item.title}
             values={item.values}

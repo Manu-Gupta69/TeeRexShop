@@ -5,8 +5,11 @@
   flex-direction: column;
 }
 .nav {
+  display: flex;
   flex: 1;
-  padding: 0 40px 0 40px;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f0f0;
 }
 .lower {
   height: 1000px;
@@ -27,5 +30,25 @@
   }
   .products {
     flex: 3;
+  }
+
+  .cart__wrapper {
+    display: flex;
+    flex: 0.5;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 25px;
+  }
+}
+
+@media screen and (max-width: 714px) {
+  .lower {
+    .sidebar {
+      display: none;
+    }
+  }
+  .nav {
+    background-color: white;
+    width: 80%;
   }
 }

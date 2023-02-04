@@ -26,6 +26,13 @@
       background-color: rgb(41, 41, 41);
       padding: 7px 15px;
       border: none;
+      cursor: pointer;
+    }
+    .manage__quantity {
+      width: 40%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
   }
 }
