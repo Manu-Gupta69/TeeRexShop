@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import ReactModal from "react-modal";
 
 import "./App.scss";
 import {
@@ -20,18 +19,12 @@ function App() {
   const [cart, setCart] = useState({});
 
   useEffect(() => {
-    const searchFilteredResult = productsData.filter(
-      (item) => item.name === searchText
-    );
-    setFilteredData(searchFilteredResult);
-  }, [searchText]);
-
-  useEffect(() => {
     (async () => {
       const res = await products.get(
         "coding-problems/shopping-cart/catalogue.json"
       );
-      if (res?.data?.length) {
+
+      if (res?.status === 200 && res?.data?.length) {
         setProductsData((prev) => res.data);
       }
     })();
@@ -40,7 +33,7 @@ function App() {
   useEffect(() => {
     const expressionButInArray = Object.values(expression);
     const filteredData = productsData.filter((item) =>
-      expressionButInArray.some((expression) => {
+      expressionButInArray.every((expression) => {
         return evalutateExpression(expression, item);
       })
     );
@@ -50,18 +43,29 @@ function App() {
 
   // APP EVENT HANDLERS
 
-  const handleCheckBox = (value, key, operation, ranges) => {
+  const searchButtonClick = () => {
+    const searchFilteredResult = productsData.filter(
+      (item) => item.name === searchText
+    );
+    setFilteredData(searchFilteredResult);
+  };
+
+  const handleCheckBox = (value, key, operation, ranges, isChecked) => {
     setExpression((prev) => {
       const newExpression = { ...prev };
-      if (newExpression.hasOwnProperty(value)) {
-        delete newExpression[value];
-      } else {
-        if (operation == "between" && ranges?.length) {
-          newExpression[value] = { key, operation, value: ranges };
-        } else {
-          newExpression[value] = { key, operation, value };
-        }
+
+      if (!isChecked) {
+        delete newExpression[key];
+
+        return newExpression;
       }
+
+      if (operation == "between" && ranges?.length) {
+        newExpression[key] = { key, operation, value: ranges };
+      } else {
+        newExpression[key] = { key, operation, value };
+      }
+
       return newExpression;
     });
   };
@@ -121,33 +125,50 @@ function App() {
 
   return (
     <div className="App">
-      <div className="nav">
-        <NavBar onCartButtonClick={cartButtonClick} cart={cart} />
-      </div>
-      <div className="lower">
-        {!isCartScreen ? (
-          <>
-            <div className="sidebar">
-              <div className="sidebar__wrapper">
-                <FilterSideBar onHandleCheckBox={handleCheckBox} />
-              </div>
-            </div>
-            <div className="products">
-              <AllProducts
-                cart={cart}
-                onAddToCartClick={addToCartClick}
-                onHandleSearch={handleSearch}
-                productsData={filteredData.length ? filteredData : productsData}
-                onManageQuantityClick={manageQuantityClick}
-              />
-            </div>
-          </>
-        ) : (
-          <div className="cart__wrapper">
-            <ShoppingCart onDeleteFromCart={deleteFromCartClick} cart={cart} />
+      {productsData.length ? (
+        <>
+          <div className="nav">
+            <NavBar onCartButtonClick={cartButtonClick} cart={cart} />
           </div>
-        )}
-      </div>
+          <div className="lower">
+            {!isCartScreen ? (
+              <>
+                <div className="sidebar">
+                  <div className="sidebar__wrapper">
+                    <FilterSideBar onHandleCheckBox={handleCheckBox} />
+                  </div>
+                </div>
+                <div className="products">
+                  {Object.keys(expression).length && !filteredData.length ? (
+                    "Sorry currently we don't have this kind of product"
+                  ) : (
+                    <AllProducts
+                      cart={cart}
+                      onAddToCartClick={addToCartClick}
+                      onHandleSearch={handleSearch}
+                      onSearchButtonClick={searchButtonClick}
+                      productsData={
+                        filteredData.length ? filteredData : productsData
+                      }
+                      onManageQuantityClick={manageQuantityClick}
+                    />
+                  )}
+                </div>
+              </>
+            ) : (
+              <div className="cart__wrapper">
+                <ShoppingCart
+                  onManageQuantityClick={manageQuantityClick}
+                  onDeleteFromCart={deleteFromCartClick}
+                  cart={cart}
+                />
+              </div>
+            )}
+          </div>
+        </>
+      ) : (
+        <div> Sorry We are currently under maintainance</div>
+      )}
     </div>
   );
 }

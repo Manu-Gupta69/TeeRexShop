@@ -13,6 +13,16 @@ const CartItemCard = (props) => {
       <div className="cart__qty">
         <span>Qty:{itemQuantity}</span>
       </div>
+      <button
+        onClick={() => props.onManageQuantityClick("increment", product.id)}
+      >
+        +
+      </button>
+      <button
+        onClick={() => props.onManageQuantityClick("decrement", product.id)}
+      >
+        -
+      </button>
       <button onClick={() => props.onDeleteFromCart(product.id)}>Delete</button>
     </div>
   );

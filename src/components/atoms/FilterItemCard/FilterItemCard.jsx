@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./FilterItemCard.scss";
 const FilterItemCard = ({
   title,
@@ -7,6 +7,8 @@ const FilterItemCard = ({
   itemKey,
   operation,
   onHandleCheckBox,
+  onHandleFilterClick,
+  filteredOption,
 }) => {
   return (
     <div className="card__parent">
@@ -16,9 +18,17 @@ const FilterItemCard = ({
           return (
             <div key={index} className="child__2_checkbox">
               <input
-                onClick={() => {
+                checked={filteredOption[itemKey] === item}
+                onChange={(e) => {
                   const range = ranges ? ranges[index] : null;
-                  onHandleCheckBox(item, itemKey, operation, range);
+                  onHandleFilterClick(itemKey, item);
+                  onHandleCheckBox(
+                    item,
+                    itemKey,
+                    operation,
+                    range,
+                    e.target.checked
+                  );
                 }}
                 type={"checkbox"}
               />

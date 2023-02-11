@@ -13,7 +13,14 @@ const SearchBar = (props) => {
         onChange={(e) => props.onHandleSearch(e)}
       />
       <div className="icon__wrapper">
-        <Search size={30} color={"#ffff"} />
+        <Search
+          onClick={(e) => {
+            props.onSearchButtonClick();
+            e.stopPropagation();
+          }}
+          size={30}
+          color={"#ffff"}
+        />
       </div>
       <div className="icon__wrapper filter">
         <Filter size={30} color={"#ffff"} />

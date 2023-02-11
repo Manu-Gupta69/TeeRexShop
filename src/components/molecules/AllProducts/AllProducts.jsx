@@ -6,7 +6,10 @@ const AllProducts = (props) => {
   return (
     <div className="products__parent">
       <div className="products__searchBar">
-        <SearchBar onHandleSearch={props.onHandleSearch} />
+        <SearchBar
+          onHandleSearch={props.onHandleSearch}
+          onSearchButtonClick={props.onSearchButtonClick}
+        />
       </div>
       <div className="products__cards">
         {props.productsData.map((item) => {

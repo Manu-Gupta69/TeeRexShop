@@ -15,6 +15,7 @@ const ShoppingCart = (props) => {
         {cartItems.map((item) => {
           return (
             <CartItemCard
+              onManageQuantityClick={props.onManageQuantityClick}
               onDeleteFromCart={props.onDeleteFromCart}
               cartItemData={item}
             />
